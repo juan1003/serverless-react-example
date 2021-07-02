@@ -4,14 +4,22 @@ import './App.css';
 
 function App() {
   const [message, setMessage] = useState("");
+  const [otherMessage, setOtherMessage] = useState("");
 
   const fetchData = async function() {
     const response = await (await (fetch('.netlify/functions/helloWorld'))).json();
     setMessage(response.message);
   };
 
+  const fetchOtherData = async function() {
+    const response = await (await (fetch('.netlify/functions/getGood'))).json();
+    console.log(response.message)
+    setOtherMessage(response.message);
+  }
+
   useEffect(() => {
     fetchData()
+    fetchOtherData()
   }, []);
 
   return (
@@ -20,6 +28,9 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           {message}
+        </p>
+        <p>
+          {otherMessage}
         </p>
         <a
           className="App-link"
